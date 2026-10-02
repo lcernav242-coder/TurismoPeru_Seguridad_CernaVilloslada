@@ -1,54 +1,112 @@
-# TurismoPeru_Seguridad_CernaVilloslada
+# TurismoPeru Seguridad - Cerna Villoslada
 
 ## Descripción
+Proyecto de administración y seguridad de la base de datos TURISMOPERU_LFCV.
 
-Proyecto correspondiente a la Tercera Evaluación del curso Base de Datos II.
+El proyecto implementa control de usuarios, roles, permisos, pruebas de seguridad, importación y exportación de datos, respaldo de base de datos y documentación del proceso mediante Git y GitHub.
 
-El objetivo es implementar mecanismos básicos de administración y seguridad para la base de datos de TurismoPeru, incluyendo:
+## Tecnologías utilizadas
+- SQL Server
+- SQL Server Management Studio
+- BCP
+- Git
+- GitHub
+- Power BI
 
-- Creación de logins y usuarios.
+## Base de datos
+Base de datos utilizada:
+
+TURISMOPERU_LFCV
+
+Esquema principal:
+
+LFCV
+
+## Funcionalidades implementadas
+- Creación de logins.
+- Creación de usuarios de base de datos.
 - Creación de roles.
 - Asignación de permisos.
 - Aplicación del principio de mínimo privilegio.
-- Importación y exportación de datos.
-- Respaldo de la base de datos.
 - Pruebas de seguridad.
-- Gestión del proyecto mediante Git y GitHub.
-- Elaboración de reportes mediante Power BI.
+- Importación y exportación mediante BCP.
+- Backup completo en formato BACPAC.
+- Control de versiones mediante Git y GitHub.
 
-## Tecnologías utilizadas
+## Estructura del proyecto
 
-- Microsoft SQL Server
-- SQL Server Management Studio / SQL Server
-- Visual Studio Code
-- Git
-- GitHub
-- Power BI Desktop
+- `01_usuarios_roles`: scripts de logins, usuarios, roles y permisos.
+- `02_importacion_exportacion`: scripts y archivos de intercambio de datos.
+- `03_backups`: respaldo completo de la base de datos.
+- `04_seguridad`: pruebas de permisos.
+- `05_reportes`: reporte final.
+- `06_powerbi`: archivos relacionados con Power BI.
+- `evidencias`: capturas que demuestran la ejecución del proyecto.
 
-## Requisitos
+## Scripts disponibles
 
-- SQL Server instalado o acceso a un servidor SQL Server.
-- Acceso a la base de datos asignada.
-- Git instalado.
-- Cuenta de GitHub.
-- Visual Studio Code.
-- Power BI Desktop.
+### 01_logins.sql
+Crea los logins necesarios en SQL Server.
 
-## Base de datos
+### 02_users.sql
+Crea los usuarios asociados a los logins dentro de TURISMOPERU_LFCV.
 
-Base de datos utilizada:
+### 03_roles.sql
+Crea los roles de vendedor y analista.
 
-```text
-TURISMOPERU_LFCV
+### 04_permisos.sql
+Asigna los permisos correspondientes según las responsabilidades de cada rol.
+
+### importacion.sql
+Implementa la tabla de staging, validación de registros y detección de duplicados.
+
+### pruebas_permisos.sql
+Permite comprobar que los usuarios pueden realizar únicamente las operaciones autorizadas.
 
 ## Principio de mínimo privilegio
 
-El principio de mínimo privilegio establece que cada usuario debe disponer únicamente de los permisos necesarios para realizar sus funciones.
+No se asigna `db_owner` al vendedor ni al analista porque este rol otorga control completo sobre la base de datos.
 
-No es adecuado asignar el rol `db_owner` al vendedor ni al analista porque este rol concede control completo sobre la base de datos.
+El vendedor recibe únicamente los permisos necesarios para consultar y registrar información relacionada con clientes y reservas.
 
-El vendedor únicamente necesita registrar y consultar información relacionada con clientes y reservas, además de consultar alojamientos y habitaciones. No necesita administrar usuarios, roles, logins, respaldos ni eliminar información crítica.
+El analista dispone solamente de permisos de lectura, ya que su función consiste en consultar información para la generación de reportes.
 
-El analista únicamente necesita permisos de lectura para consultar la información utilizada en los reportes. No debe realizar operaciones `INSERT`, `UPDATE` ni `DELETE`.
+## Backup y restauración
 
-Por este motivo se crearon los roles `rol_vendedor` y `rol_analista`, asignándoles únicamente los permisos necesarios para cumplir sus respectivas funciones.
+Se generó un respaldo completo en formato BACPAC:
+
+`03_backups/TurismoPeru_LFCV_Full.bacpac`
+
+Este archivo permite conservar el esquema y los datos de la base de datos para su posterior importación o restauración.
+
+## Importación y exportación
+
+La exportación de datos se realizó mediante la herramienta BCP de SQL Server.
+
+Se trabajó con información relacionada con:
+
+- Clientes.
+- Reservas.
+- Pagos.
+- Lugares turísticos.
+
+Para la importación se utiliza una tabla de staging denominada:
+
+`LFCV.cliente_importacion`
+
+Antes de insertar información se realizan validaciones de datos incompletos, duplicados y registros previamente existentes.
+
+## Evidencias
+
+Las evidencias se encuentran en la carpeta `evidencias`.
+
+Se incluyen capturas relacionadas con:
+
+- Creación de logins.
+- Roles.
+- Permisos.
+- Backup de la base de datos.
+- Pruebas de seguridad.
+
+## Autor
+Cerna Villoslada
